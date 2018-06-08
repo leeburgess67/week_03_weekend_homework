@@ -29,15 +29,15 @@ class Customer
     @id = customer['id'].to_i
   end
 
-  def self.all()
+  def self.all() #class method
     sql = "SELECT * FROM customers"
     values = []
-    customers = SqlRunner.run(sql, values)
-    result = customers.map { |customer| Customer.new( customer ) }
-    return result
+    customers = SqlRunner.run(sql, values) #returns an array of hashes
+    result = customers.map { |customer| Customer.new( customer ) } #for each item(hash) in array, iterate over and pass that hash to Customer.new to create a new customer object.
+    return result #returns each customer object
   end
 
-  def update # EXTENSION
+  def update
     sql = "UPDATE customers SET name = $1, funds = $2 WHERE id = $3"
     values = [@name, @funds, @id]
     SqlRunner.run(sql, values)
@@ -64,10 +64,10 @@ class Customer
   return user_data.map { |customer| Customer.new(customer) }
   end
 
-  def buy_ticket(film)
-    @funds -= film.price
+  def buy_ticket(film) #passing in a film object
+    @funds -= film.price #acceesses the price from the film object
     Ticket.new({ 'customer_id' => @id,  'film_id' => film.id }).save
-    update()
+    update() #ticket.new must take in a hash so you pass it in the customer id (as you are calling the method on a specific customer) and you are givng it the film_id of the film passed in.
 
   end
 

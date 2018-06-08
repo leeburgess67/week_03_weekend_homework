@@ -3,13 +3,14 @@ require_relative("./customers.rb")
 
 class Film
 
-  attr_reader :id
+  attr_reader :id, :time_showing
   attr_accessor :title, :price
 
     def initialize( options )
       @id = options['id'].to_i if options['id']
       @title = options['title']
       @price = options['price'].to_i
+      @time_showing = options['time_showing'].to_i
     end
 
     def save()
