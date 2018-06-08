@@ -57,9 +57,9 @@ class Ticket
   # end
   #
   #
-  # def self.map_items(visit_data)
-  #   return visit_data.map { |visit| Visit.new(visit) }
-  # end
+  def self.map_items(ticket_data)
+    return ticket_data.map { |ticket| Ticket.new(ticket) }
+  end
   #
   #
 
