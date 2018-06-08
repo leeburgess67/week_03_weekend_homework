@@ -18,17 +18,16 @@ class Ticket
     sql = "INSERT INTO tickets
     (
       customer_id,
-      film_id,
-
+      film_id
     )
     VALUES
     (
       $1, $2
     )
     RETURNING id"
-    values = [@customer_id, @film_id,]
-    visit = SqlRunner.run( sql,values ).first
-    @id = ticket['id'].to_i
+    values = [@customer_id, @film_id]
+    film = SqlRunner.run( sql,values ).first
+    @id = film['id'].to_i
   end
 
   def self.all()
@@ -42,7 +41,7 @@ class Ticket
     sql = "DELETE FROM tickets"
     SqlRunner.run(sql)
   end
-  # 
+  #
   # def location()
   #   sql  = "SELECT * FROM locations WHERE id = $1"
   #   values = [@location_id]

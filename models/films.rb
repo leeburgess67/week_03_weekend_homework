@@ -1,21 +1,21 @@
 require_relative("../db/sql_runner")
 require_relative("./customers.rb")
 
-class Customer
+class Film
 
   attr_reader :id
-  attr_accessor :title :price
+  attr_accessor :title, :price
 
   def initialize( options )
     @id = options['id'].to_i if options['id']
     @title = options['title']
-    @price = options['price']
+    @price = options['price'].to_i
   end
 
   def save()
     sql = "INSERT INTO films
     (
-      name
+      title
     )
     VALUES
     (
@@ -55,4 +55,4 @@ class Customer
 #   def self.map_items(user_data)
 #   return user_data.map { |location| Location.new(location) }
 #   end
-# end
+end

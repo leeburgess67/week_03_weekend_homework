@@ -4,12 +4,12 @@ require_relative("./films.rb")
 class Customer
 
   attr_reader :id
-  attr_accessor :name :funds
+  attr_accessor :name, :funds
 
   def initialize( options )
     @id = options['id'].to_i if options['id']
     @name = options['name']
-    @funds = options['funds']
+    @funds = options['funds'].to_i
   end
 
   def save()
@@ -28,7 +28,7 @@ class Customer
   end
 
   def self.all()
-    sql = "SELECT * FROM users"
+    sql = "SELECT * FROM customers"
     values = []
     customers = SqlRunner.run(sql, values)
     result = customers.map { |customer| Customer.new( customer ) }
@@ -36,11 +36,13 @@ class Customer
   end
 
   def self.delete_all()
-    sql = "DELETE FROM users"
+    sql = "DELETE FROM customers"
     values = []
     SqlRunner.run(sql, values)
   end
 
+
+end
 #   def locations()
 #     sql = "SELECT locations.*
 #     FROM locations
@@ -55,4 +57,3 @@ class Customer
 #   def self.map_items(user_data)
 #   return user_data.map { |location| Location.new(location) }
 #   end
-# end
