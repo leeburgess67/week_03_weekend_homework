@@ -51,6 +51,12 @@ class Film
       customers = SqlRunner.run(sql, values)
       return Customer.map_items(customers)
     end
+
+    def update # EXTENSION
+      sql = "UPDATE films SET title = $1, price = $2 WHERE id = $3"
+      values = [@title, @price, @id]
+      SqlRunner.run(sql, values)
+    end
   #
     def self.map_items(user_data)
     return user_data.map { |film| Film.new(film) }

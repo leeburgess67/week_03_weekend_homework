@@ -1,5 +1,6 @@
 require_relative("../db/sql_runner")
 require_relative("./films.rb")
+require_relative("./tickets.rb")
 
 class Customer
 
@@ -15,14 +16,15 @@ class Customer
   def save()
     sql = "INSERT INTO customers
     (
-      name
+      name,
+      funds
     )
     VALUES
     (
-      $1
+      $1, $2
     )
     RETURNING id"
-    values = [@name]
+    values = [@name, @funds]
     customer = SqlRunner.run( sql, values ).first
     @id = customer['id'].to_i
   end
@@ -33,6 +35,12 @@ class Customer
     customers = SqlRunner.run(sql, values)
     result = customers.map { |customer| Customer.new( customer ) }
     return result
+  end
+
+  def update # EXTENSION
+    sql = "UPDATE customers SET name = $1, funds = $2 WHERE id = $3"
+    values = [@name, @funds, @id]
+    SqlRunner.run(sql, values)
   end
 
   def self.delete_all()
@@ -55,6 +63,15 @@ class Customer
   def self.map_items(user_data)
   return user_data.map { |customer| Customer.new(customer) }
   end
+
+  def buy_ticket(film)
+    @funds -= film.price
+    Ticket.new({ 'customer_id' => @id,  'film_id' => film.id }).save
+    update()
+
+  end
+
+
 
 
 end
