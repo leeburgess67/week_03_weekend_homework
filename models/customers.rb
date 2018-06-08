@@ -71,7 +71,12 @@ class Customer
 
   end
 
-
-
-
+  def check_tickets()
+    sql = 'SELECT tickets.*
+    FROM tickets
+    WHERE customer_id = $1'
+    values = [@id]
+    tickets = SqlRunner.run(sql, values)
+    return Ticket.map_items(tickets)
+  end
 end
