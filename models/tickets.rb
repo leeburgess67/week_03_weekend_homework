@@ -41,12 +41,13 @@ class Ticket
     sql = "DELETE FROM tickets"
     SqlRunner.run(sql)
   end
-  
+
   def self.map_items(ticket_data)
     return ticket_data.map { |ticket| Ticket.new(ticket) }
   end
-  #
-  #
+
+
+
 
 
 

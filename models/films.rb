@@ -72,6 +72,15 @@ class Film
       return Customer.map_items(customers).count
     end
 
-
+    def what_time_showing
+      sql = 'SELECT films.*
+      FROM films
+      INNER JOIN screenings
+      ON screenings.film_id = films.id
+      WHERE film_id = $1'
+      values = [@id]
+      screenings = SqlRunner.run(sql, values)
+      return Screening.map_items(screenings)
+    end
 
 end
